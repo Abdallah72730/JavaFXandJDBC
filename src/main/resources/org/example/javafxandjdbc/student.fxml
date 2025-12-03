@@ -17,12 +17,12 @@
       <TextField BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <TableView editable="true" prefHeight="385.0" prefWidth="391.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="TableView" editable="true" prefHeight="385.0" prefWidth="391.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Grade" />
-            <TableColumn prefWidth="75.0" text="Age" />
+          <TableColumn fx:id="ColID" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="ColName" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="ColGrade" prefWidth="75.0" text="Grade" />
+            <TableColumn fx:id="ColAge" prefWidth="75.0" text="Age" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -48,14 +48,14 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textAlignment="CENTER" wrappingWidth="136.59895133972168" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Grade:" textAlignment="CENTER" wrappingWidth="136.6588478088379" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" textAlignment="CENTER" wrappingWidth="136.4713478088379" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Add" textAlignment="CENTER" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="Delete" GridPane.rowIndex="5" />
-            <Button contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtName" GridPane.columnIndex="1" />
+            <TextField fx:id="txtID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtGrade" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtAge" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Add" textAlignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="Delete" GridPane.rowIndex="5" />
+            <Button fx:id="btnClear" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </left>
@@ -63,11 +63,11 @@
       <AnchorPane prefHeight="467.0" prefWidth="215.0" BorderPane.alignment="CENTER">
          <children>
             <Text layoutX="14.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search By Name:" />
-            <TextField layoutX="14.0" layoutY="139.0" />
+            <TextField fx:id="txtSearchByName" layoutX="14.0" layoutY="139.0" />
             <Text layoutX="14.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search By Grade:" />
-            <TextField layoutX="14.0" layoutY="234.0" prefHeight="26.0" prefWidth="54.0" />
-            <TextField layoutX="108.0" layoutY="234.0" prefHeight="26.0" prefWidth="58.0" />
-            <Button layoutX="14.0" layoutY="333.0" mnemonicParsing="false" text="Export" />
+            <TextField fx:id="txtSMin" layoutX="14.0" layoutY="234.0" prefHeight="26.0" prefWidth="54.0" />
+            <TextField fx:id="txtSMax" layoutX="108.0" layoutY="234.0" prefHeight="26.0" prefWidth="58.0" />
+            <Button fx:id="btnExport" layoutX="14.0" layoutY="333.0" mnemonicParsing="false" text="Export" />
          </children>
       </AnchorPane>
    </right>
