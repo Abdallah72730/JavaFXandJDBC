@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="org.example.javafxandjdbc.StudentController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <TextField BorderPane.alignment="CENTER" />
    </top>
@@ -52,7 +52,7 @@
             <TextField fx:id="txtID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtGrade" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtAge" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Add" textAlignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#btnAddAction" prefHeight="30.0" prefWidth="120.0" text="Add" textAlignment="CENTER" GridPane.rowIndex="4" />
             <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="119.0" text="Delete" GridPane.rowIndex="5" />
             <Button fx:id="btnClear" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="5" />

@@ -6,6 +6,7 @@ module org.example.javafxandjdbc {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens org.example.javafxandjdbc to javafx.fxml;
     exports org.example.javafxandjdbc;
