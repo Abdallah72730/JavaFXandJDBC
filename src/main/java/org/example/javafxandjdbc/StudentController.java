@@ -12,8 +12,13 @@ import java.util.ResourceBundle;
 
 public class StudentController implements Initializable {
 
-        @FXML
+    public TextField txtEmail;
+    public TableColumn ColEmail;
+    @FXML
         private TableColumn<Student, Integer> ColAge;
+
+        @FXML
+        private TableColumn<Student, String> ColCourse;
 
         @FXML
         private TableColumn<Student, Double> ColGrade;
@@ -55,6 +60,9 @@ public class StudentController implements Initializable {
         private TextField txtName;
 
         @FXML
+        private TextField txtCourse;
+
+        @FXML
         private TextField txtSMax;
 
         @FXML
@@ -74,6 +82,8 @@ public class StudentController implements Initializable {
         ColID.setCellValueFactory(new PropertyValueFactory<>("id"));
         ColAge.setCellValueFactory(new PropertyValueFactory<>("age"));
         ColGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+        ColCourse.setCellValueFactory(new PropertyValueFactory<>("course"));
+
         TableView.setItems(students);
 
         TableView.setOnMouseClicked((e) -> {
@@ -83,6 +93,7 @@ public class StudentController implements Initializable {
                 txtID.setText(String.valueOf(student.getId()));
                 txtAge.setText(String.valueOf(student.getAge()));
                 txtGrade.setText(String.valueOf(student.getGrade()));
+                txtCourse.setText(String.valueOf(student.getCourse()));
 
             }
         });
@@ -91,7 +102,7 @@ public class StudentController implements Initializable {
     @FXML
     void btnAddAction(ActionEvent event) {
         try{
-            Student s = new Student(txtName.getText(), Integer.parseInt(txtID.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtGrade.getText()) );
+            Student s = new Student(txtName.getText(), Integer.parseInt(txtID.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtGrade.getText()), txtCourse.getText(), txtEmail.getText() );
             students.add(s);
             clearFields();
         }catch(NumberFormatException ex){
@@ -117,9 +128,10 @@ public class StudentController implements Initializable {
         if(selected!=null){
             try{
                 selected.setName(txtName.getText());
-                selected.setId(Integer.parseInt(txtID.getText()));
-                selected.setAge(Integer.parseInt(txtAge.getText()));
-                selected.setGrade(Integer.parseInt(txtGrade.getText()));
+                selected.setAge(Integer.parseInt(txtAge.getText().trim()));
+                selected.setGrade(Integer.parseInt(txtGrade.getText().trim()));
+                selected.setCourse(txtCourse.getText());
+                selected.setEmail(txtEmail.getText());
             }catch(NumberFormatException ex){
                 showAlert("valid numbers must be provided");
             }
@@ -132,6 +144,8 @@ public class StudentController implements Initializable {
         txtID.clear();
         txtAge.clear();
         txtGrade.clear();
+        txtCourse.clear();
+        txtEmail.clear();
 
     }
 
