@@ -8,12 +8,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.event.ActionEvent;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class StudentController implements Initializable {
-
     public TextField txtEmail;
-    public TableColumn ColEmail;
+    public TableColumn<Student, String> ColEmail;
     @FXML
         private TableColumn<Student, Integer> ColAge;
 
@@ -76,6 +79,7 @@ public class StudentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        txtID.setEditable(false);
         students = FXCollections.observableArrayList();
 
         ColName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -83,6 +87,7 @@ public class StudentController implements Initializable {
         ColAge.setCellValueFactory(new PropertyValueFactory<>("age"));
         ColGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
         ColCourse.setCellValueFactory(new PropertyValueFactory<>("course"));
+        ColEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableView.setItems(students);
 
@@ -94,21 +99,38 @@ public class StudentController implements Initializable {
                 txtAge.setText(String.valueOf(student.getAge()));
                 txtGrade.setText(String.valueOf(student.getGrade()));
                 txtCourse.setText(String.valueOf(student.getCourse()));
+                txtEmail.setText(String.valueOf(student.getEmail()));
 
             }
         });
+        loadTable();
+
     }
+
 
     @FXML
     void btnAddAction(ActionEvent event) {
-        try{
-            Student s = new Student(txtName.getText(), Integer.parseInt(txtID.getText()), Integer.parseInt(txtAge.getText()), Double.parseDouble(txtGrade.getText()), txtCourse.getText(), txtEmail.getText() );
-            students.add(s);
-            clearFields();
-        }catch(NumberFormatException ex){
-            showAlert("Please provide valid numbers");
-        }
+        String sql = "INSERT INTO students (name,age,grade,course, email) VALUES (?,?,?,?,?)";
 
+        try(Connection conn = DBConnection.getConnection()){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, txtName.getText());
+            pstmt.setInt(2, Integer.parseInt(txtAge.getText()));
+            pstmt.setString(3, txtGrade.getText());
+            pstmt.setString(4, txtCourse.getText());
+            pstmt.setString(5, txtEmail.getText());
+            pstmt.executeUpdate();
+            clearFields();
+            loadTable();
+
+        }catch(Exception ex){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+        }
     }
     @FXML
     void btnClearAction(ActionEvent event) {
@@ -157,4 +179,23 @@ public class StudentController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public void loadTable()
+    {
+        String sql = "SELECT * FROM students";
+        students.clear();
+        try(Connection conn = DBConnection.getConnection();){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                students.add(new Student(rs.getString("Name"), rs.getInt("ID"), rs.getInt("Age"),rs.getDouble("Grade"), rs.getString("Course"), rs.getString("Email") ));
+
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+
 }
