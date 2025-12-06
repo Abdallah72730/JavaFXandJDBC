@@ -1,6 +1,7 @@
 package org.example.javafxandjdbc;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -76,6 +77,8 @@ public class StudentController implements Initializable {
 
         private ObservableList<Student> students;
 
+        private FilteredList<Student> filteredStudents;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -89,7 +92,9 @@ public class StudentController implements Initializable {
         ColCourse.setCellValueFactory(new PropertyValueFactory<>("course"));
         ColEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        TableView.setItems(students);
+
+        loadTable();
+
 
         TableView.setOnMouseClicked((e) -> {
             Student student = TableView.getSelectionModel().getSelectedItem();
@@ -103,7 +108,58 @@ public class StudentController implements Initializable {
 
             }
         });
-        loadTable();
+
+        filteredStudents = new FilteredList<>(students, p -> true);
+
+        txtSearchByName.textProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+        txtSMin.textProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+        txtSMax.textProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+
+        TableView.setItems(filteredStudents);
+
+
+    }
+
+    private void applyFilters(){
+        filteredStudents.setPredicate(student -> {
+            String searchText = txtSearchByName.getText().toLowerCase();
+
+            Double minRange  = parseGrade(txtSMin.getText());
+            Double maxRange = parseGrade(txtSMax.getText());
+
+            boolean nameMatch = true;
+            boolean gradeMatch = true;
+
+            if (minRange != null && maxRange != null && minRange > maxRange) {
+                Double temp = minRange;
+                minRange = maxRange;
+                maxRange = temp;
+            }
+
+            if(searchText != null && !searchText.isEmpty()){
+                nameMatch = student.getName().toLowerCase().contains(searchText);
+            }
+
+            if (minRange != null && student.getGrade() < minRange) {
+                gradeMatch = false;
+            }
+            if (maxRange != null && student.getGrade() > maxRange) {
+                gradeMatch = false;
+            }
+            return nameMatch && gradeMatch;
+        });
+    }
+
+    private Double parseGrade(String text){
+
+        if (text == null || text.trim().isEmpty()){
+            return null;
+        }
+        try{
+            return Double.parseDouble(text.trim());
+        } catch(NumberFormatException e){
+           return null;
+        }
 
     }
 
@@ -138,25 +194,42 @@ public class StudentController implements Initializable {
     }
     @FXML
     void btnDeleteAction(ActionEvent event) {
-        Student selected =  TableView.getSelectionModel().getSelectedItem();
-        if(selected!=null){
-            students.remove(selected);
+        String sql = "Delete from students where id = ?";
+        try(Connection conn = DBConnection.getConnection()){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, Integer.parseInt(txtID.getText()));
+            pstmt.executeUpdate();
             clearFields();
+            loadTable();
+        }catch(Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
         }
     }
     @FXML
     void btnUpdateAction(ActionEvent event) {
-        Student selected =  TableView.getSelectionModel().getSelectedItem();
-        if(selected!=null){
-            try{
-                selected.setName(txtName.getText());
-                selected.setAge(Integer.parseInt(txtAge.getText().trim()));
-                selected.setGrade(Integer.parseInt(txtGrade.getText().trim()));
-                selected.setCourse(txtCourse.getText());
-                selected.setEmail(txtEmail.getText());
-            }catch(NumberFormatException ex){
-                showAlert("valid numbers must be provided");
-            }
+        String sql = "Update students SET name = ?,age = ?,grade = ?,course = ?,email = ?  WHERE id=?";
+        try(Connection conn = DBConnection.getConnection()){
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, txtName.getText());
+            pstmt.setInt(2, Integer.parseInt(txtAge.getText()));
+            pstmt.setFloat(3, Float.parseFloat(txtGrade.getText()));
+            pstmt.setString(4, txtCourse.getText());
+            pstmt.setString(5, txtEmail.getText());
+            pstmt.setInt(6, Integer.parseInt(txtID.getText()));
+            pstmt.executeUpdate();
+            clearFields();
+            loadTable();
+
+        }catch(Exception ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
         }
     }
 

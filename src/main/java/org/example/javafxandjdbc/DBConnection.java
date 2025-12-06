@@ -6,13 +6,15 @@ import java.sql.SQLException;
 
 public class DBConnection {
     private static ConfigLoader config = new ConfigLoader();
-    private static final String url =  "jdbc:mysql://mysql-studentmanagement-student491625365.g.aivencloud.com:21039/student_db";
+    private static final String url =  "jdbc:mysql://localHost:3306/DBConnectivity";
+    private static final String user = "root";
+    private static final String password123 = config.getPassword();
 
 
 
     public static Connection getConnection() throws SQLException {
-        String username = config.getUsername();
-        String password = config.getPassword();
+        String username = user;
+        String password = password123;
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {

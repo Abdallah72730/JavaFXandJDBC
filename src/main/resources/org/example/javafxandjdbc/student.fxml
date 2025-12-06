@@ -67,7 +67,7 @@
                   <Insets left="10.0" />
               </GridPane.margin>
            </Button>
-           <Button fx:id="btnClear" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7">
+           <Button fx:id="btnClear" contentDisplay="RIGHT" onAction="#btnClearAction" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="7">
               <GridPane.margin>
                   <Insets left="10.0" />
               </GridPane.margin>
