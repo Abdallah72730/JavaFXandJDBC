@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Student {
     private SimpleStringProperty name;
     private SimpleIntegerProperty id;
-    private SimpleIntegerProperty age ;
+    private SimpleIntegerProperty age;
     private SimpleDoubleProperty grade;
     private SimpleStringProperty course;
     private SimpleStringProperty email;
