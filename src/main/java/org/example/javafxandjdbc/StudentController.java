@@ -181,11 +181,7 @@ public class StudentController implements Initializable {
 
         }catch(Exception ex){
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
+            showAlert(ex.getMessage());
         }
     }
     @FXML
@@ -202,11 +198,7 @@ public class StudentController implements Initializable {
             clearFields();
             loadTable();
         }catch(Exception ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
+            showAlert(ex.getMessage());
         }
     }
     @FXML
@@ -225,11 +217,7 @@ public class StudentController implements Initializable {
             loadTable();
 
         }catch(Exception ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
+            showAlert(ex.getMessage());
         }
     }
 
@@ -266,9 +254,7 @@ public class StudentController implements Initializable {
 
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            showAlert(ex.getMessage());
         }
     }
-
-
 }
