@@ -178,7 +178,6 @@ public class StudentController implements Initializable {
             pstmt.executeUpdate();
             clearFields();
             loadTable();
-
         }catch(Exception ex){
 
             showAlert(ex.getMessage());
@@ -215,7 +214,6 @@ public class StudentController implements Initializable {
             pstmt.executeUpdate();
             clearFields();
             loadTable();
-
         }catch(Exception ex){
             showAlert(ex.getMessage());
         }
@@ -229,7 +227,6 @@ public class StudentController implements Initializable {
         txtGrade.clear();
         txtCourse.clear();
         txtEmail.clear();
-
     }
 
     private void showAlert(String message)
